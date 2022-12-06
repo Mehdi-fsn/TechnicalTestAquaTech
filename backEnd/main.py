@@ -14,11 +14,17 @@ def hello_world():
     return "<script>alert('bad')</script>"
 
 # Route permettant d'insérer les données génrérées dans la BDD
-@app.route("/generator")
+@app.route("/generator", methods=["GET", "POST"])
 def generator():
     # Session mysql
     sessionl = session()
 
+    # Vérification si les données ont déja été générées
+    verif = sessionl.query(capteurNiveauEau).filter(capteurNiveauEau.date == '2022-11-28 00:00:00')
+    for v in verif:
+        if(int(v.cm)):
+            return {"result" : "error"}
+    
     # Insertion des données du capteur de niveau d'eau
     gEau = generatorEau()
 
@@ -95,3 +101,5 @@ def delete():
     generator()
     
     return {"result" : "success"}
+
+

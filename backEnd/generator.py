@@ -8,9 +8,9 @@ def generatorEau():
     vMax = 300  # cm
     vCurrent = 150  # Niveau actuel
 
-    upDown = 1  # 0 = phase reduction du niveau, 1 = phase d'augmentation du niveau
+    upDown = 1  # 0 = phase reduction du niveau, 1 = phase de stabilité, 2 = phase d'augmentation du niveau
     time = 0  # 1 à 120 minutes (durée de phase)
-    step = 0  # 0.0 à 1.0 (step entre chaque données)
+    step = 1  # 0.0 à 1.0 (step entre chaque données)
 
     date = datetime(2022, 11, 27, 23, 59)
 
@@ -20,7 +20,7 @@ def generatorEau():
 
     # System
     while (count < 10080):
-        upDown = random.randint(0, 1)
+        upDown = random.randint(0, 2)
         time = random.randint(1, 120)
 
         for t in range(time):
@@ -55,7 +55,7 @@ def generatorPression():
     vMax = 4  # bar
     vCurrent = 2.5  # Pression actuel
 
-    upDown = 1  # 0 = phase reduction du niveau, 1 = phase d'augmentation du niveau
+    upDown = 1  # 0 = phase reduction du niveau, 1 = phase de stabilité, 2 = phase d'augmentation du niveau
     time = 0  # 1 à 120 minutes (durée de phase)
     step = 0  # 0.0 à 0.01 (step entre chaque données)
 
@@ -67,7 +67,7 @@ def generatorPression():
 
     # System
     while (count < 10080):
-        upDown = random.randint(0, 1)
+        upDown = random.randint(0, 2)
         time = random.randint(1, 120)
 
         for t in range(time):
@@ -102,6 +102,8 @@ def setCurrentValue(upDown, step, vCurrent, vMin, vMax, arroundValue):
         case 0:
             vCurrent -= step
         case 1:
+            vCurrent = vCurrent
+        case 2:
             vCurrent += step
 
     if (vCurrent < vMin):
