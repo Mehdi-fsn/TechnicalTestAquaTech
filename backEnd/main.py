@@ -55,29 +55,29 @@ def generator():
         "result" : "success"
     }
 
-@app.route("/getDataEau", methods=["GET"])
+@app.route("/getDataEau", methods=["GET", "POST"])
 def getDataEau():
-    # Session mysql
     sessionl = session()
+
+    datemin = request.form['date_min']
+    datemax = request.form['date_max']
+
+    datas = sessionl.query(capteurNiveauEau).filter(capteurNiveauEau.date.between(datemin, datemax))
     
-    #  Selection de la table capteurNiveauEau
-    datas = sessionl.query(capteurNiveauEau)
-    
-    #  Implémentation du fichier JSON qui contiendra les données à renvoyer
     result = []
     for data in datas:
         result.append(data.as_dict())
     return result
 
-@app.route("/getDataPression", methods=["GET"])
+@app.route("/getDataPression", methods=["GET", "POST"])
 def getDataPression():
-    # Session mysql
     sessionl = session()
+
+    datemin = request.form['date_min']
+    datemax = request.form['date_max']
+
+    datas = sessionl.query(capteurPression).filter(capteurPression.date.between(datemin, datemax))
     
-    #  Selection de la table capteurPression
-    datas = sessionl.query(capteurPression)
-    
-    #  Implémentation du fichier JSON qui contiendra les données à renvoyer
     result = []
     for data in datas:
         result.append(data.as_dict())

@@ -10,7 +10,7 @@ def generatorEau():
 
     upDown = 1  # 0 = phase reduction du niveau, 1 = phase d'augmentation du niveau
     time = 0  # 1 à 120 minutes (durée de phase)
-    step = 1.50  # 0.0 à 2.0 (step entre chaque données)
+    step = 0  # 0.0 à 1.0 (step entre chaque données)
 
     date = datetime(2022, 11, 27, 23, 59)
 
@@ -24,7 +24,7 @@ def generatorEau():
         time = random.randint(1, 120)
 
         for t in range(time):
-            step = round(random.uniform(0, 2), 2)
+            step = round(random.uniform(0, 1), 2)
 
             #  Config de la date
             date += timedelta(minutes=1)
@@ -32,7 +32,7 @@ def generatorEau():
             #  Config de la donnée de niveau Eau
             vCurrent = setCurrentValue(upDown, step, vCurrent, vMin, vMax, 2)
             
-            #  Renvoi de la donéée
+            #  Renvoi de la donnée avec un générateurs pour ne pas utiliser la mémoire interne 
             yield {
                 "date" : date,
                 "vCurrent" : vCurrent
@@ -57,7 +57,7 @@ def generatorPression():
 
     upDown = 1  # 0 = phase reduction du niveau, 1 = phase d'augmentation du niveau
     time = 0  # 1 à 120 minutes (durée de phase)
-    step = 0  # 0.0 à 0.02 (step entre chaque données)
+    step = 0  # 0.0 à 0.01 (step entre chaque données)
 
     date = datetime(2022, 11, 27, 23, 59)
 
@@ -71,7 +71,7 @@ def generatorPression():
         time = random.randint(1, 120)
 
         for t in range(time):
-            step = round(random.uniform(0, 0.02), 5)
+            step = round(random.uniform(0, 0.01), 5)
 
             #  Config de la date
             date += timedelta(minutes=1)
