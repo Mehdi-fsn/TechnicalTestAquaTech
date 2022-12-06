@@ -2,6 +2,10 @@
   <div class="container">
     <nav>
       <p><strong>Test Technique Aquatech</strong></p>
+      <p>Génération des données :</p>
+      <button type="button" class="btn" @click="generateData">Genérer les données</button>
+      <p>Refresh des données :</p>
+      <button type="button" class="btn" @click="refreshData">Refresh</button>
       <form @submit.prevent="updateData">
         <label for="datemin" class="form-label">Date minimum :</label>
         <input type="datetime-local" class="datemin" v-model="datemin" />
@@ -11,8 +15,6 @@
           Mettre à jour les données
         </button>
       </form>
-      <p>Refresh des données : </p>
-      <button type="button" class="btn" @click="refreshData">Refresh</button>
     </nav>
     <div id="canvas">
       <canvas id="eau"></canvas>
@@ -195,6 +197,19 @@ export default {
 
       this.updateData()
     },
+    async generateData() {
+        await axios
+        .post("http://127.0.0.1:5000/generator")
+        .then((response) => {
+          if(response.data.result == "error") {
+            this.$toast.error("Vous avez déja génrérer des données !")
+          }
+          else {
+            this.updateData()
+          }
+        })
+        .catch((err) => console.log(err));        
+    }
   },
 };
 </script>
@@ -203,13 +218,6 @@ export default {
 .container {
   display: flex;
   justify-content: space-between;
-  background: radial-gradient(
-      circle at 94.02% 88.03%,
-      #54a4ff,
-      transparent 100%
-    ),
-    radial-gradient(circle at 25.99% 27.79%, #ff94fb, transparent 100%),
-    radial-gradient(circle at 50% 50%, #000000, #000000 100%);
 }
 
 nav {
@@ -217,18 +225,20 @@ nav {
   box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.4);
   color: white;
   height: auto;
+  border-radius: 10px;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  margin: 10px 10px;
+  border-radius: 10px;
 }
 
-p,
-input,
-label,
-button {
-  margin: 5px 15px;
+form * {
+  margin: 7px 7px;
 }
 
 #canvas {
@@ -237,7 +247,8 @@ button {
 
 canvas {
   background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  margin: 10px;
+  margin: 0 10px 10px 10px;
 }
 </style>
