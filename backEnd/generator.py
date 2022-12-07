@@ -79,7 +79,7 @@ def generatorPression():
             #  Config de la donnée pression
             vCurrent = setCurrentValue(upDown, step, vCurrent, vMin, vMax, 5)
             
-            #  Renvoi de la donnée
+            #  Renvoi de la donnée avec un générateurs pour ne pas utiliser la mémoire interne 
             yield {
                 "date" : date,
                 "vCurrent" : vCurrent
