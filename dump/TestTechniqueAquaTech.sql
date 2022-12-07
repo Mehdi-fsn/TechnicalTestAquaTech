@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 30 nov. 2022 à 15:57
+-- Généré le : mer. 07 déc. 2022 à 10:24
 -- Version du serveur : 8.0.31-0ubuntu0.22.04.1
 -- Version de PHP : 8.1.2-1ubuntu2.8
 
@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `TestTechniqueAquaTech`
 --
-
+CREATE DATABASE IF NOT EXISTS TestTechniqueAquaTech;
+USE TestTechniqueAquaTech;
 -- --------------------------------------------------------
 
 --
@@ -29,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `capteurNiveauEau` (
   `date` datetime NOT NULL,
-  `cm` decimal(10,0) NOT NULL
+  `cm` float(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -40,7 +41,7 @@ CREATE TABLE `capteurNiveauEau` (
 
 CREATE TABLE `capteurPression` (
   `date` datetime NOT NULL,
-  `bar` decimal(10,0) NOT NULL
+  `bar` float(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 COMMIT;
 

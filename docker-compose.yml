@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+    db:
+        image: mysql
+        ports: 
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: TestTechniqueAquaTech
+            MYSQL_USER: userdb
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - persistent:/var/lib/mysql
+            - persistent:/var/run/mysqld
+        networks:
+            - default
+        container_name: database
+    backend:
+        build: 
+          context: ./backEnd
+          dockerfile: Dockerfile
+        entrypoint: ['/app/entrypoint.sh']
+        volumes:
+          - ./backEnd:/app
+          - persistent:/run/mysqld
+        ports:
+          - "5000:5000"
+        depends_on:
+          - db
+        networks:
+          - default
+        container_name: backend
+    frontend:
+        build:
+          context: ./frontend
+          dockerfile: Dockerfile
+        ports:
+          - "3080:8080"
+        volumes:
+          - ./frontend:/app
+        environment:
+          - BACKEND_SERVICE_URL=http://127.0.0.1:5001
+          - VUE_GATEWAY_URL=http://127.0.0.1:3007
+        depends_on:
+          - backend
+        networks:
+          - default
+        container_name: frontend
+networks:
+  default:
+
+volumes:
+    persistent:
