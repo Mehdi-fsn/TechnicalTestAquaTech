@@ -4,7 +4,7 @@ Update : I was hired !!
 
 The test was conducted as part of an application to AquaTech. The aim is to create a data generator simulating data from two different sensors (water level and pressure sensor). In order to analyze these data, it was necessary to display them as a graph. To do this, I had to create a frontend and a backend in order to retrieve and display them.
 
-## Les technologies 
+## Techonologies
 
 #### Database - MySQL
 > The database was selected based on 3 factors: speed, ease of use and experience. Indeed, a relational database is not necessarily necessary, but the 3 criteria mentioned above led me to this choice.
